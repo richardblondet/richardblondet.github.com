@@ -4,4 +4,4 @@ Richard Blondet
 
 * https://twitter.com/richardblondet
 
-Copyright 2013-2016
+Copyright 2016
