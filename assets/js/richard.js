@@ -116,35 +116,75 @@ function initHandler() {
 	politeLoadHandler();
 }
 function reflow() {
+	var loaderEl = document.getElementById("loader");
 	console.log("new width: ", x);
 	console.log("new height: ", y);
 	wrapper.style.top = "50px";
 	wrapper.style.height = ( y - 100 ) + "px";
+	loaderEl.style.width = ( x ) + "px";
+	loaderEl.style.height = ( y ) + "px";
 }
 function politeLoadHandler() {
-	_.load('assets/js/velocity.min.js', function(){
-		// Velocity loaded
-		// Velocity(
-		// 	document.querySelectorAll("#Shapes path"),
-		// 	{ strokeWidth: 10 },
-		// 	{ duration: 1000 }
-		// );
-		_.load("assets/js/vivus.min.js", function(){
-			new Vivus("svg-logo", {duration: 400}, function(){
-				Velocity(
-					document.querySelectorAll("#svg-logo path"),
-					{ fill: "#3D3F47" },
-					{ duration: 500, complete: function(){
-						Velocity(document.getElementById("loader"), 
-							{ opacity: 0}, 
-							{ duration: 500});
-						_.removeClass(document.body, "page-is-loading");
-					}}
-				)
-			});
-		})
+	_.load("assets/js/velocity.min.js", function(){
+		_.load("assets/js/velocity.ui.min.js", function(){/*Good to go*/});
+		_.load("assets/js/vivus.min.js", loadingAnimation);
 	});
 }
 function loadingAnimation() {
-	// 
+	new Vivus("svg-logo", {
+		duration: 400,
+		type: 'oneByOne',
+		start: 'inViewport'
+	}, introAnimationHandler);
+}
+/* Velocity CheatSheet
+ *|=======================================|
+	duration: 400,
+	easing: "swing",
+	queue: "",
+	begin: undefined,
+	progress: undefined,
+	complete: undefined,
+	display: undefined,
+	visibility: undefined,
+	loop: false,
+	delay: false,
+	mobileHA: true
+ *|=======================================|
+*/
+
+function introAnimationHandler() {
+	var loader = document.getElementById("loader"), 
+		svgLogoPaths = document.querySelectorAll("#svg-logo path");
+	Velocity.mock = -2;
+	var introAnimationSequence = [
+		{
+			e: svgLogoPaths,
+			p: { fill: "#3D3F47" },
+			o: { duration: 550 }
+		},
+		{
+			e: document.getElementById("svg-logo-container"),
+			p: { translateY: "50px", opacity: 0 },
+			o: { duration: 250, delay: 200 }
+		}
+	];
+
+	Velocity.RunSequence( introAnimationSequence );
+	// Velocity(
+	// 	svgLogoPaths, { 
+	// 		fill: "#3D3F47" 
+	// 	}, { 
+	// 		duration: 500, 
+	// 		complete: function() {
+	// 		Velocity (
+	// 			loader, { 
+	// 				opacity: 0
+	// 			}, { 
+	// 				duration: 500
+	// 			}
+	// 		);
+	// 		_.removeClass(document.body, "page-is-loading");
+	// 	}}
+	// )
 }
