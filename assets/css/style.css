@@ -121,3 +121,15 @@ h6 {
 .page-heading {
 	font-size: 6em;
 }
+#loader {
+    z-index: 20;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+#loader svg {
+    width: 96px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
