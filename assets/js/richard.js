@@ -125,8 +125,29 @@ function reflow() {
 	loaderEl.style.height = ( y ) + "px";
 }
 function politeLoadHandler() {
+	var prepareAnimationSet = new Array();
 	_.load("assets/js/velocity.min.js", function(){
-		_.load("assets/js/velocity.ui.min.js", function(){/*Good to go*/});
+		_.load("assets/js/velocity.ui.min.js", function(){
+			/*Good to go*/
+			prepareAnimationSet = [
+				{
+					e: document.getElementById("logo"),
+					p: { translateY: ["-20px", 0], opacity: [0,1] },
+					o: { duration: 250, delay: 550 }
+				},
+				{
+					e: document.getElementById("page-heading"),
+					p: { translateX: ["-50px", 0], opacity: [0,1] },
+					o: { duration: 100, sequenceQueue: false }
+				},
+				{
+					e: document.getElementById("the-content"),
+					p: { opacity: [0,1] },
+					o: { duration: 100, sequenceQueue: false }
+				}
+			]
+			Velocity.RunSequence( prepareAnimationSet );
+		});
 		_.load("assets/js/vivus.min.js", loadingAnimation);
 	});
 }
@@ -153,10 +174,11 @@ function loadingAnimation() {
  *|=======================================|
 */
 
-function introAnimationHandler() {
+function introAnimationHandler(prepareAnimationSet) {
+	console.log(prepareAnimationSet);
 	var loader = document.getElementById("loader"), 
 		svgLogoPaths = document.querySelectorAll("#svg-logo path");
-	Velocity.mock = -2;
+	// Velocity.mock = 1;
 	var introAnimationSequence = [
 		{
 			e: svgLogoPaths,
@@ -166,25 +188,32 @@ function introAnimationHandler() {
 		{
 			e: document.getElementById("svg-logo-container"),
 			p: { translateY: "50px", opacity: 0 },
-			o: { duration: 250, delay: 200 }
+			o: { duration: 450, delay: 200, easing: [ 0.17, 0.67, 0.83, 0.67] }
+		},
+		{
+			e: loader,
+			p: { opacity: 0 },
+			o: { duration: 450, complete:function(){
+				_.removeClass(document.body, "page-is-loading");
+				loader.style.display = "none";
+			}}
+		},
+		{
+			e: document.getElementById("logo"),
+			p: { translateY: [0, "-20px"], opacity: [1,0] },
+			o: { duration: 300, delay: 650, easing: "ease-in-out" }
+		},
+		{
+			e: document.getElementById("page-heading"),
+			p: { translateX: [0, "-50px"], opacity: [1,0] },
+			o: { duration: 300, delay: 400, easing: "ease-in-out" }
+		},
+		{
+			e: document.getElementById("the-content"),
+			p: { opacity: [1,0] },
+			o: { duration: 300, delay: 350, easing: "ease-in-out", sequenceQueue: false }
 		}
 	];
 
 	Velocity.RunSequence( introAnimationSequence );
-	// Velocity(
-	// 	svgLogoPaths, { 
-	// 		fill: "#3D3F47" 
-	// 	}, { 
-	// 		duration: 500, 
-	// 		complete: function() {
-	// 		Velocity (
-	// 			loader, { 
-	// 				opacity: 0
-	// 			}, { 
-	// 				duration: 500
-	// 			}
-	// 		);
-	// 		_.removeClass(document.body, "page-is-loading");
-	// 	}}
-	// )
 }
