@@ -107,6 +107,9 @@ function initHandler() {
 		y = w.innerHeight|| e.clientHeight|| g.clientHeight;
 		reflow();
 	});
+	_.onReady(function(){
+		_.removeClass(document.body, "page-is-loading");
+	});
 }
 function reflow() {
 	console.log("Reflowing ", y);
