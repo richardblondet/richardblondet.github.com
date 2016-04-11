@@ -23,6 +23,9 @@
 
 body {
 	background-color: #F5F5F5;
+	background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPgo8cmFkaWFsR3JhZGllbnQgaWQ9Imc2ODYiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiBjeD0iNTAlIiBjeT0iNTAlIiByPSI0MDAlIj4KPHN0b3Agc3RvcC1jb2xvcj0iI0U2RTZFNiIgb2Zmc2V0PSIwIi8+PHN0b3Agc3RvcC1jb2xvcj0iI0Y2RjZGNiIgb2Zmc2V0PSIwLjE2Ii8+PHN0b3Agc3RvcC1jb2xvcj0iI0Y3RjdGNyIgb2Zmc2V0PSIwLjIyIi8+PHN0b3Agc3RvcC1jb2xvcj0iI2Y4ZjhmOCIgb2Zmc2V0PSIwLjM4Ii8+PHN0b3Agc3RvcC1jb2xvcj0iI2Y5ZjlmOSIgb2Zmc2V0PSIwLjYyIi8+PHN0b3Agc3RvcC1jb2xvcj0iI2ZmZmZmZiIgb2Zmc2V0PSIwLjc4Ii8+CjwvcmFkaWFsR3JhZGllbnQ+CjxyZWN0IHg9Ii01MCIgeT0iLTUwIiB3aWR0aD0iMTAxIiBoZWlnaHQ9IjEwMSIgZmlsbD0idXJsKCNnNjg2KSIgLz4KPC9zdmc+);
+	background-size: cover;
+	background-position: center;
 	font-family: "Roboto Slab";
 	font-weight: 300;
 	position: relative;
@@ -42,7 +45,19 @@ h6 {
 	font-family: "Montserrat";
 	font-weight: 700;
 }
-body:before, body:after {
+.ui-debug {
+	border: none;
+}
+.ui-debug:before {
+	content: "";
+}
+.ui-debug.on {
+	border: solid 1px red;
+}
+.ui-debug.on:before {
+	content: attr(class);
+}
+/*body:before, body:after {
 	content: "";
 	height: 100%;
 	width: 50vw;
@@ -50,7 +65,6 @@ body:before, body:after {
 	top: 0;
 	background-color: #F5F5F5;
 	z-index: 1;
-	/* Force Hardware Acceleration */
 	-webkit-backface-visibility: hidden;
 	backface-visibility: hidden;
 	-webkit-transform: translateZ(0);
@@ -78,8 +92,8 @@ body:after {
 	-ms-transform: translateX(100%);
 	-o-transform: translateX(100%);
 	transform: translateX(100%);
-}
-body.page-is-loading:before {
+}*/
+/*body.page-is-loading:before {
 	left: 0;
 	-webkit-transform: translateX(0);
 	-moz-transform: translateX(0);
@@ -94,36 +108,19 @@ body.page-is-loading:after {
 	-ms-transform: translateX(0);
 	-o-transform: translateX(0);
 	transform: translateX(0);
-}
+}*/
 .in-blo {
 	display: inline-block;
 }
-#wrapper {
+#page-wrapper {
 	background-color: #fff;
-	position: absolute;
-	width: 100%;
-	height: 100%;
-}
-#page-container {
-	position: absolute;
-	background-color: #fff;
-	height: 100%;
-	width: 65%;
-	left: 0;
-	top: 0;
-}
-#image-container {
-	position: absolute;
-	background-color: #3498db;
-	height: 100%;
-	width: 35%;
-	right: 0;
-	top: 0;
-}
-#content {
 	position: relative;
-    margin: 0 auto;
-    width: 75%;
+	min-height: 800px;
+	border-collapse: separate; /* IE9 */
+	-moz-box-shadow: 0px 15px 10px #E6E6E6;
+	-webkit-box-shadow: 0px 15px 10px #E6E6E6;
+	box-shadow: 0px 15px 10px #E6E6E6;
+	margin-top: 25px;
 }
 #loader {
     z-index: 20;
@@ -141,13 +138,55 @@ body.page-is-loading:after {
     margin: 0 auto;
     margin-top: 50px;
 }
-#logo {
-	width: 96px;
+#top-row {
+	padding: 30px 30px;
 }
-#page-heading {
-	font-size: 6em;
-	margin-bottom: 50px;
+#stick-debug {
+	position: fixed;
+	top: 10px;
+	right: 10px;
 }
-#the-content {
-	width: 56%;
+.onoffswitch {
+    position: relative; width: 51px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+.onoffswitch:before {
+	content: "Debug: ";
+	position: absolute;
+	left: -50px;
+}
+.onoffswitch-checkbox {
+    display: none;
+}
+.onoffswitch-label {
+    display: block; overflow: hidden; cursor: pointer;
+    height: 23px; padding: 0; line-height: 23px;
+    border: 2px solid #CCCCCC; border-radius: 23px;
+    background-color: #FFFFFF;
+    -webkit-transition: background-color 0.1s ease-in;
+    -moz-transition: background-color 0.1s ease-in;
+    -ms-transition: background-color 0.1s ease-in;
+    transition: background-color 0.1s ease-in;
+}
+.onoffswitch-label:before {
+    content: "";
+    display: block; width: 23px; margin: 0px;
+    background: #FFFFFF;
+    position: absolute; top: 0; bottom: 0;
+    right: 26px;
+    border: 2px solid #CCCCCC; border-radius: 23px;
+    -webkit-transition: all 0.3s ease-in 0s; 
+    -moz-transition: all 0.1s ease-in 0s; 
+    -ms-transition: all 0.1s ease-in 0s; 
+    transition: all 0.1s ease-in 0s; 
+}
+.onoffswitch-checkbox.on + .onoffswitch-label {
+    background-color: #399E37;
+}
+.onoffswitch-checkbox.on + .onoffswitch-label, 
+.onoffswitch-checkbox.on + .onoffswitch-label:before {
+   border-color: #399E37;
+}
+.onoffswitch-checkbox.on + .onoffswitch-label:before {
+    right: 0px; 
 }

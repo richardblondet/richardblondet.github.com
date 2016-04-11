@@ -19,7 +19,7 @@
 
 <body class='page-is-loading' onload='javascript:initHandler();'>
     
-    <div id="loader">
+    <!-- <div id="loader">
         <div id="svg-logo-container">
             <svg id="svg-logo" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 256 256" style="enable-background:new 0 0 256 256;" xml:space="preserve">
                 <g id="Shapes">
@@ -65,23 +65,26 @@
                 </g>
             </svg>
         </div> 
-    </div>
-    <div id="wrapper">
-        <div id="page-container">
-        </div>
-        <div id="image-container"></div>
-        <div id="content">
-            <div id="logo">
-                <img src="assets/img/_logo.svg" onerror="this.src='assets/img/logo.png'" height="96" width="96" alt="">
-            </div>
-            <h1 id="page-heading" class="text-uppercase">
-                Richard Blondet
-            </h1>
-            <div id="the-content">
-                <p>  A Web Developer from Santo Domingo. Currently Front-End Developer at Joystick Interactive. </p>
+    </div> -->
+    
+    <div class="container-fluid ui-debug">
+        <div id="page-wrapper" class="col-lg-offset-1 col-lg-10 ui-debug">
+            <div id="top-row" class="container-fluid ui-debug">
+                <div class="LEFT COLUMN col-lg-3 ui-debug">
+                    <div id="logo">
+                        <img src="assets/img/_logo.svg" width="72" height="72" alt="RB">
+                    </div>
+                </div>
+                <div class="CENTER COLUMN col-lg-6 ui-debug"></div>
             </div>
         </div>
     </div>
+    <div id="stick-debug">
+        <div class="onoffswitch">
+            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+            <label class="onoffswitch-label" for="myonoffswitch"></label>
+        </div>
+    </div> 
 
     <!-- Richard.js  -->
     <script src="assets/js/richard.js" type="text/javascript"></script>

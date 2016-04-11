@@ -38,6 +38,13 @@ _ = {
 			? el.classList.remove( classN )
 			: el.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
 	},
+	hasClass: function(el, className) {
+		if (el.classList) {
+		  return el.classList.contains(className);
+		} else {
+			return  new RegExp('(^| )' + className + '( |$)', 'gi').test(el.className);
+		}
+	},
 	isVisible: function(el) {
 	    var rect = el.getBoundingClientRect();
 	    return (
@@ -58,7 +65,7 @@ _ = {
 			el.attachEvent("on" + type, callback );
 		}
 		else {
-			obj["on"+type] = callback;
+			el["on"+type] = callback;
 		}
 	},
 	onReady: function( handler ) {	
@@ -104,25 +111,35 @@ function initHandler() {
 	if( !window.console || typeof console == "undefined" ) {
 		window.console = function(){};
 	}
-	reflow();
+	// reflow();
 	_.watch(function(e){
 		x = w.innerWidth || e.clientWidth || g.clientWidth;
 		y = w.innerHeight|| e.clientHeight|| g.clientHeight;
-		reflow();
+		console.log("new width: ", x);
+		console.log("new height: ", y);
 	});
-	// _.onReady(function(){
-	// 	_.removeClass(document.body, "page-is-loading");
-	// });
-	politeLoadHandler();
-}
-function reflow() {
-	var loaderEl = document.getElementById("loader");
-	console.log("new width: ", x);
-	console.log("new height: ", y);
-	wrapper.style.top = "50px";
-	wrapper.style.height = ( y - 100 ) + "px";
-	loaderEl.style.width = ( x ) + "px";
-	loaderEl.style.height = ( y ) + "px";
+	_.onReady(function(){
+		_.removeClass(document.body, "page-is-loading");
+	});
+	// politeLoadHandler();
+	var debugButton = document.querySelector(".onoffswitch-checkbox");
+	var state = false;
+		_.on(debugButton, "click", function(e){
+			if(!state) {
+				_.addClass(debugButton, "on"); state = true;
+				console.log("ON");
+				[].forEach.call(document.querySelectorAll(".ui-debug"), function(x){
+					_.addClass(x, "on");
+				});
+			} else {
+				_.removeClass(debugButton, "on"); state = false;
+				[].forEach.call(document.querySelectorAll(".ui-debug"), function(x){
+					_.removeClass(x, "on");
+				});
+				console.log("Off");
+			}
+			
+		}, false);
 }
 function politeLoadHandler() {
 	var prepareAnimationSet = new Array();
