@@ -2,7 +2,7 @@
  *|=======================================|
  *| [file:richard.js]
  *|
- *| Page Custom Logic. 
+ *| Library and Logic.
  *| @author Richard Blondet
  *|=======================================|
 */
@@ -12,13 +12,12 @@ var w = window,
 	g = d.getElementsByTagName('body')[0],
 	x = w.innerWidth || e.clientWidth || g.clientWidth,
 	y = w.innerHeight|| e.clientHeight|| g.clientHeight,
-	v,
+	v;
+var wrapper = document.getElementById("wrapper"),
 
-	wrapper = d.getElementById("wrapper"), // our wrapper
-
-_ = {
+richard = {
 	version: "0.1",
-	domReady: false,
+	DOMReady: false,
 	userAgent: navigator.userAgent || navigator.vendor || window.opera,
 	isMobile: function() {
 		var ua = this.userAgent;
@@ -27,6 +26,12 @@ _ = {
 		} else {
 			return false;
 		}
+	},
+	__: function(string, args) {
+		if( !window.console || typeof console == "undefined" ) {
+			window.console = function(){};
+		}
+		console.log.apply(console, arguments);
 	},
 	addClass: function(el, classN) {
 		el.classList 
@@ -68,22 +73,25 @@ _ = {
 			el["on"+type] = callback;
 		}
 	},
-	onReady: function( handler ) {	
+	isReady: function( handler ) {	
 		if( d.readyState != "loading" ) {
 			if(typeof handler == "function"){
-				this.domReady = true;
+				this.DOMReady = true;
 				handler();
 			} else {
 				return;	
 			}
 		}
 		else {
-			d.addEventListener("DOMContentLoaded", hander, false);
+			d.addEventListener("DOMContentLoaded", handler, false);
 		}
 	},
 	watch: function( callback ) {
-		this.on( window, "resize", function(e){
-			callback(e); 
+		var self = this, width, height;
+		this.on( window, "resize", function(e) {
+			width = w.innerWidth || e.clientWidth || g.clientWidth,
+			height = w.innerHeight|| e.clientHeight|| g.clientHeight;
+			callback(e, width, height); 
 		});
 	},
 	load: function( file, callback ) {
@@ -105,132 +113,22 @@ _ = {
 		}
 		s.addEventListener("load", callback);
 	}
-}
+};
+
 function initHandler() {
-	console.log("Init handler");
-	if( !window.console || typeof console == "undefined" ) {
-		window.console = function(){};
+
+	if(! richard.DOMReady ) {
+		richard.isReady( initHandler );
+	} else {
+		pageLoaded();
 	}
-	// reflow();
-	_.watch(function(e){
-		x = w.innerWidth || e.clientWidth || g.clientWidth;
-		y = w.innerHeight|| e.clientHeight|| g.clientHeight;
-		console.log("new width: ", x);
-		console.log("new height: ", y);
-	});
-	_.onReady(function(){
-		_.removeClass(document.body, "page-is-loading");
-	});
-	// politeLoadHandler();
-	var debugButton = document.querySelector(".onoffswitch-checkbox");
-	var state = false;
-		_.on(debugButton, "click", function(e){
-			if(!state) {
-				_.addClass(debugButton, "on"); state = true;
-				console.log("ON");
-				[].forEach.call(document.querySelectorAll(".ui-debug"), function(x){
-					_.addClass(x, "on");
-				});
-			} else {
-				_.removeClass(debugButton, "on"); state = false;
-				[].forEach.call(document.querySelectorAll(".ui-debug"), function(x){
-					_.removeClass(x, "on");
-				});
-				console.log("Off");
-			}
-			
-		}, false);
 }
-function politeLoadHandler() {
-	var prepareAnimationSet = new Array();
-	_.load("assets/js/velocity.min.js", function(){
-		_.load("assets/js/velocity.ui.min.js", function(){
-			/*Good to go*/
-			prepareAnimationSet = [
-				{
-					e: document.getElementById("logo"),
-					p: { translateY: ["-20px", 0], opacity: [0,1] },
-					o: { duration: 250, delay: 550 }
-				},
-				{
-					e: document.getElementById("page-heading"),
-					p: { translateX: ["-50px", 0], opacity: [0,1] },
-					o: { duration: 100, sequenceQueue: false }
-				},
-				{
-					e: document.getElementById("the-content"),
-					p: { opacity: [0,1] },
-					o: { duration: 100, sequenceQueue: false }
-				}
-			]
-			Velocity.RunSequence( prepareAnimationSet );
-		});
-		_.load("assets/js/vivus.min.js", loadingAnimation);
-	});
+function pageLoaded() {
+	wrapper.style.width  = x + 'px';
+	wrapper.style.height = y + 'px';
+	richard.watch(function(e, x, y) {
+		wrapper.style.width  = x + 'px';
+		wrapper.style.height = y + 'px';
+	})
 }
-function loadingAnimation() {
-	new Vivus("svg-logo", {
-		duration: 400,
-		type: 'oneByOne',
-		start: 'inViewport'
-	}, introAnimationHandler);
-}
-/* Velocity CheatSheet
- *|=======================================|
-	duration: 400,
-	easing: "swing",
-	queue: "",
-	begin: undefined,
-	progress: undefined,
-	complete: undefined,
-	display: undefined,
-	visibility: undefined,
-	loop: false,
-	delay: false,
-	mobileHA: true
- *|=======================================|
-*/
-
-function introAnimationHandler(prepareAnimationSet) {
-	console.log(prepareAnimationSet);
-	var loader = document.getElementById("loader"), 
-		svgLogoPaths = document.querySelectorAll("#svg-logo path");
-	// Velocity.mock = 1;
-	var introAnimationSequence = [
-		{
-			e: svgLogoPaths,
-			p: { fill: "#3D3F47" },
-			o: { duration: 550 }
-		},
-		{
-			e: document.getElementById("svg-logo-container"),
-			p: { translateY: "50px", opacity: 0 },
-			o: { duration: 450, delay: 200, easing: [ 0.17, 0.67, 0.83, 0.67] }
-		},
-		{
-			e: loader,
-			p: { opacity: 0 },
-			o: { duration: 450, complete:function(){
-				_.removeClass(document.body, "page-is-loading");
-				loader.style.display = "none";
-			}}
-		},
-		{
-			e: document.getElementById("logo"),
-			p: { translateY: [0, "-20px"], opacity: [1,0] },
-			o: { duration: 300, delay: 650, easing: "ease-in-out" }
-		},
-		{
-			e: document.getElementById("page-heading"),
-			p: { translateX: [0, "-50px"], opacity: [1,0] },
-			o: { duration: 300, delay: 400, easing: "ease-in-out" }
-		},
-		{
-			e: document.getElementById("the-content"),
-			p: { opacity: [1,0] },
-			o: { duration: 300, delay: 350, easing: "ease-in-out", sequenceQueue: false }
-		}
-	];
-
-	Velocity.RunSequence( introAnimationSequence );
-}
+richard.on(window, "load", initHandler);
