@@ -116,7 +116,6 @@ richard = {
 };
 
 function initHandler() {
-
 	if(! richard.DOMReady ) {
 		richard.isReady( initHandler );
 	} else {
@@ -129,6 +128,7 @@ function pageLoaded() {
 	richard.watch(function(e, x, y) {
 		wrapper.style.width  = x + 'px';
 		wrapper.style.height = y + 'px';
-	})
+	});
+	richard.removeClass(g, 'is-loading');
 }
 richard.on(window, "load", initHandler);
