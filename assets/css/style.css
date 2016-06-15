@@ -55,10 +55,9 @@ h6 {
 #paper {
 	position: relative;
 	background-color: #fff;
-	min-height: 250px;
-	-webkit-box-shadow: 0 7px 17px #cccccc;
-	-moz-box-shadow: 0 7px 17px #cccccc;
-	box-shadow: 0 7px 17px #cccccc;
+	-webkit-box-shadow: 0 34px 44px #cccccc; /* 0 7px 17px #cccccc */
+	-moz-box-shadow: 0 34px 44px #cccccc;
+	box-shadow: 0 34px 44px #cccccc;
 	-webkit-radius: 3px;
 	border-radius: 3px;
 }
@@ -76,6 +75,111 @@ h6 {
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
 }
-#paper [class*='col-'] {
+.nop {
 	padding: 0;
+}
+.product-image {
+	position: relative;
+}
+.product-image:after {
+	content: "";
+    position: absolute;
+    top: 7%;
+    left: 9%;
+    background-color: #009cc3; /* #20d3fd */
+    width: 81%;
+    height: 87%;
+    display: block;
+    opacity: 0.5;
+}
+.product-name {
+	font-size: 1.5em;
+	margin-top: 30px;
+	margin-bottom: 0;
+}
+.product-category {
+	color: #afafaf;
+}
+.product-price {
+    color: #666;
+}
+.product-detail {
+    margin-top: 25px;
+}
+.detail-title {
+    font-weight: 600;
+    font-size: 1em;
+    margin-bottom: 0;
+}
+.detail-content {
+    font-size: 1.1em;
+}
+.product-cta {
+	margin-top: 20px;
+	margin-bottom: 50px;
+}
+.btn {
+	display: inline-block;
+	padding: 10px 25px;
+	margin-bottom: 0;
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 1.72857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	border: none;
+	border-radius: 32px;
+	font-family: "Montserrat";
+}
+.btn:hover {
+	text-decoration: none;
+}
+.btn-primary {
+	color: #fff;
+	background-color: #00d7d7;
+}
+/*  Mobile First */
+@media screen and (min-width: 480px) {
+	#paper {
+		min-height: 250px;
+	}
+	.product-image:before {
+		content: "";
+		position: absolute;
+		top: 0;
+		right: -78px;
+    	width: 157px;
+    	height: 100%;
+		background-color: #fff;
+		transform: skewX(15deg);
+	}
+	.product-info {
+		position: relative;
+		margin-top: 100px;
+	}
+	.product-name {
+		font-size: 3em;
+	}
+	.detail-title {
+	    font-size: 1.3em;
+	}
+	.btn-primary {
+		font-size: 24px;
+	}
+	.product-cta {
+		margin-top: 50px;
+		margin-bottom: 20px;
+	}
+	.detail-content {
+	    font-size: 1.4em;
+	}
 }
