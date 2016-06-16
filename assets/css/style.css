@@ -78,15 +78,15 @@ body.is-loading #paper {
 .product-image {
 	position: relative;
 	height: 290px;
-	overflow-y: hidden;
+	overflow: hidden;
 	-webkit-transition: all 0.9s 1s ease-in-out;
 	-moz-transition: all 0.9s 1s ease-in-out;
 	-o-transition: all 0.9s 1s ease-in-out;
 	-ms-transition: all 0.9s 1s ease-in-out;
 	transition: all 0.9s 1s ease-in-out;
+	opacity: 1;
 }
 body.is-loading .product-image {
-	height: 0;
 	opacity: 0;
 }
 /* .product-image:after { content: ""; position: absolute; top: 7%; left: 9%; background-color: #009cc3; width: 81%; height: 87%; display: block; opacity: 0.5; } */
@@ -192,7 +192,7 @@ body.is-loading .product-cta {
 .product-social-media {
 	position: absolute;
 	bottom: 25px;
-	left: 25px;
+	right: 25px;
 	transition: all 2s 2s ease-in-out;
 	opacity: 1;
 }
@@ -237,6 +237,7 @@ body.is-loading .product-social-media {
 	.product-image {
 		height: auto;
 		width: auto;
+		overflow: visible;
 	}
 	body.is-loading .product-image {
 		width: 0;
@@ -287,6 +288,9 @@ body.is-loading .product-social-media {
 	.btn.btn-social {
 	    padding: 1px 14px;
 	    font-size: 16px;
+	}
+	.product-social-media {
+		left: 25px;
 	}
 	.product-social-media ul li {
 		display: block;
