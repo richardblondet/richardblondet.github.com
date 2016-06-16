@@ -92,11 +92,11 @@ body.is-loading .product-image {
 /* .product-image:after { content: ""; position: absolute; top: 7%; left: 9%; background-color: #009cc3; width: 81%; height: 87%; display: block; opacity: 0.5; } */
 .product-info {
 	opacity: 1;
-	-webkit-transition: all 0.5s 2s ease-in-out;
-	-moz-transition: all 0.5s 2s ease-in-out;
-	-o-transition: all 0.5s 2s ease-in-out;
-	-ms-transition: all 0.5s 2s ease-in-out;
-	transition: all 0.5s 2s ease-in-out;
+	-webkit-transition: all 0.2s 2s ease-in-out;
+	-moz-transition: all 0.2s 2s ease-in-out;
+	-o-transition: all 0.2s 2s ease-in-out;
+	-ms-transition: all 0.2s 2s ease-in-out;
+	transition: all 0.2s 2s ease-in-out;
 }
 body.is-loading .product-info {
 	opacity: 0;
@@ -113,11 +113,11 @@ body.is-loading .product-info {
 .product-detail {
     margin-top: 25px;
     opacity: 1;
-    -webkit-transition: all 0.5s 2.5s ease-in-out;
-    -moz-transition: all 0.5s 2.5s ease-in-out;
-    -o-transition: all 0.5s 2.5s ease-in-out;
-    -ms-transition: all 0.5s 2.5s ease-in-out;
-    transition: all 0.5s 2.5s ease-in-out;
+    -webkit-transition: all 0.2s 2.5s ease-in-out;
+    -moz-transition: all 0.2s 2.5s ease-in-out;
+    -o-transition: all 0.2s 2.5s ease-in-out;
+    -ms-transition: all 0.2s 2.5s ease-in-out;
+    transition: all 0.2s 2.5s ease-in-out;
 }
 body.is-loading .product-detail {
 	opacity: 0;
@@ -135,11 +135,11 @@ body.is-loading .product-detail {
 	margin-top: 20px;
 	margin-bottom: 50px;
 	opacity: 1;
-	-webkit-transition: all 0.5s 3s ease-in-out;
-	-moz-transition: all 0.5s 3s ease-in-out;
-	-o-transition: all 0.5s 3s ease-in-out;
-	-ms-transition: all 0.5s 3s ease-in-out;
-	transition: all 0.5s 3s ease-in-out;
+	-webkit-transition: all 0.2s 3s ease-in-out;
+	-moz-transition: all 0.2s 3s ease-in-out;
+	-o-transition: all 0.2s 3s ease-in-out;
+	-ms-transition: all 0.2s 3s ease-in-out;
+	transition: all 0.2s 3s ease-in-out;
 }
 body.is-loading .product-cta {
 	opacity: 0;
